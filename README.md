@@ -17,8 +17,8 @@ When these raw files are pushed into cloud database environments (Snowflake, Big
 To convert a single file manually, execute the following commands in your local Windows PowerShell terminal:
 
 ```powershell
-# Read legacy encoded file
-$content = Get-Content -LiteralPath "C:\your_path\legacy_file.sql" -Raw
+# Read legacy encoded file using explicit Windows-1252 (ANSI) decoding
+$content = [System.IO.File]::ReadAllText("C:\your_path\legacy_file.sql", [System.Text.Encoding]::GetEncoding(1252))
 
 # Overwrite with standard UTF-8 (No BOM)
 [System.IO.File]::WriteAllText("C:\your_path\legacy_file.sql", $content, [System.Text.Encoding]::UTF8)
